@@ -1,23 +1,25 @@
 import React,{useState} from "react";
 import BookEdit from "./BookEdit";
+import useBooksContext from "../hooks/BooksContextHook";
 
-export default function BookShow({ BookDetails, onDelete, onEdit }) {
+
+
+export default function BookShow({ BookDetails}) {
   const[open,setOpen] = useState(false);
+  const {deleteBook } = useBooksContext();
 
-  const handleClick = () => {
-    onDelete(BookDetails.id);
+  const handleDeleteClick = () => {
+    deleteBook(BookDetails.id);
   };
 
-  const handleSubmit = (id, newTitle) =>{
+  const handleSubmit = () =>{
     setOpen(false);
-    onEdit(id, newTitle);
   }
 
   let content = <h3>{BookDetails.title}</h3>
   if(open){
     content =  <BookEdit title={BookDetails} onSubmit={handleSubmit}/>
   }
-
 
   const handleEdit = () => {
     setOpen(!open);
@@ -31,7 +33,7 @@ export default function BookShow({ BookDetails, onDelete, onEdit }) {
       <button className="edit" onClick={handleEdit}>
           Edit
         </button>
-        <button className="delete" onClick={handleClick}>
+        <button className="delete" onClick={handleDeleteClick}>
           Delete
         </button>
       </div>

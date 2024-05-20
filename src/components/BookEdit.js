@@ -1,14 +1,17 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
+import useBooksContext from "../hooks/BooksContextHook";
 
-export default function BookEdit({title, onEdit, onSubmit}) {
+export default function BookEdit({title, onSubmit}) {
   const [newTitle, setNewTitle] = useState(title.title);
+  const {editBookById } = useBooksContext();
 
   const handleChange = (e) => {
     setNewTitle(e.target.value);
   }
 
   const handleSubmit = (e) => {
-    onSubmit(title.id, newTitle)
+    onSubmit();
+    editBookById(title.id, newTitle);
   };
 
   return (
